@@ -12,7 +12,45 @@ theme: united
 
 3. create test (80%) and CV (20%) set in testing set
 
-4. apply random forest to learn a classification model of "classe"" from the following variables:
+4. apply random forest to learn a classification model of "classe from the following variables:
 modFit2 <- train (classe ~  roll_belt + yaw_belt + total_accel_belt + gyros_belt_z + accel_belt_z + magnet_belt_y + gyros_dumbbell_x + gyros_dumbbell_y + accel_dumbbell_x + accel_dumbbell_y + pitch_forearm + magnet_forearm_z , method = "rf" ,  data = trainingSet)
 
-The computed out of sample error is  0.231 yet the model is prune to overfitting.
+The model seems to be affected by overfitting. Below, the training set confusion matrix is reported.
+
+trainingPred  A  B  C  D  E
+           A 85  0  0  0  0
+           B  2 64  1  0  0
+           C  0  0 53  0  0
+           D  1  0  2 56  0
+           E  0  0  0  0 64
+
+Overall Statistics
+                                          
+               Accuracy : 0.9817          
+                 95% CI : (0.9606, 0.9933)
+    No Information Rate : 0.2683          
+    P-Value [Acc > NIR] : < 2.2e-16    
+    
+
+
+And the CVSet confusion matrix:
+testingPred  A  B  C  D  E
+          A 18  1  0  0  0
+          B  0  8  2  0  1
+          C  0  1 10  2  1
+          D  2  4  2 11  0
+          E  1  1  0  0 13
+
+Overall Statistics
+                                        
+               Accuracy : 0.7692        
+                 95% CI : (0.66, 0.8571)
+    No Information Rate : 0.2692        
+    P-Value [Acc > NIR] : < 2.2e-16     
+                                        
+                  Kappa : 0.7106        
+ Mcnemar's Test P-Value : NA  
+    
+    
+ Adopting the developed model, the following classification is obtained for the testing set:
+  A C B C A E D D A A B C B A E E A B A B
