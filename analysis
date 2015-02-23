@@ -1,0 +1,11 @@
+---
+title: "Course Project"
+authour: "Niccolo Tosi"
+output:
+     html_document:
+     toc: true
+theme: united
+---
+1. Exploratory analysis of the data with plotting
+
+2. 
