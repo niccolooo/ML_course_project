@@ -15,4 +15,4 @@ theme: united
 4. apply random forest to learn a classification model of "classe"" from the following variables:
 modFit2 <- train (classe ~  roll_belt + yaw_belt + total_accel_belt + gyros_belt_z + accel_belt_z + magnet_belt_y + gyros_dumbbell_x + gyros_dumbbell_y + accel_dumbbell_x + accel_dumbbell_y + pitch_forearm + magnet_forearm_z , method = "rf" ,  data = trainingSet)
 
-The computed out of sample error is  0.231 
+The computed out of sample error is  0.231 yet the model is prune to overfitting.
