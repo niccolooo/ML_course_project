@@ -1,35 +1,18 @@
-library(caret)
-library(ggplot2)
-library(rattle)
+---
+title: "Course Project"
+authour: "Niccolo Tosi"
+output:
+     html_document:
+     toc: true
+theme: united
+---
+1. Exploratory analysis of the data with plotting
 
-set.seed(1234)
-training <- read.table("pml-training.csv", sep = ",", header = TRUE)
-problemTest <- read.table("pml-testing.csv", sep = ",", header = TRUE)
+2. Delete all columns which are NA in testing set
 
-# 1. erase rows with NA
-training <- training[complete.cases(training),]
+3. create test (80%) and CV (20%) set in testing set
 
-# 2. consider only columns with non NA values in problemTest
-columns_to_keep <- !apply( problemTest , 2 , function(x) all(is.na(x)) )
-problemTest <- problemTest[ , columns_to_keep]
-training <- training[ , columns_to_keep ]
-
-# 3. create training set and cross validation set
-inTrain <- createDataPartition(training$classe, p = 0.8)[[1]]
-trainingSet <- training[inTrain,]
-CVSet <- training[-inTrain,]
-
-# 4. build model of classe with random forests
-#modFit1 <- train (classe ~  roll_belt + yaw_belt + total_accel_belt + gyros_belt_z + accel_belt_z + magnet_belt_y + gyros_dumbbell_x + gyros_dumbbell_y + accel_dumbbell_x + accel_dumbbell_y + pitch_forearm + magnet_forearm_z , method = "rpart" ,  data = trainingSet)
+4. apply random forest to learn a classification model of "classe"" from the following variables:
 modFit2 <- train (classe ~  roll_belt + yaw_belt + total_accel_belt + gyros_belt_z + accel_belt_z + magnet_belt_y + gyros_dumbbell_x + gyros_dumbbell_y + accel_dumbbell_x + accel_dumbbell_y + pitch_forearm + magnet_forearm_z , method = "rf" ,  data = trainingSet)
-fancyRpartPlot(modFit$finalModel)
 
-# 5. evaluate on training and CV sets
-trainingPred <- predict(modFit2, newdata = trainingSet)
-classError(trainingPred, trainingSet$classe)
-testingPred <- predict(modFit2, newdata = CVSet)
-classError(testingPred, CVSet$classe)
-
-# 6. classify problem examples
-problemTestPred <- predict(modFit, newdata = problemTest)
-pml_write_files(problemTestPred)
+The computed out of sample error is  0.231 
